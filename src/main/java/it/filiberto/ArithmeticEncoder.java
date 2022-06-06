@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022.
+ * Author: Iacopo Filiberto
+ */
+
 package it.filiberto;
 
 public class ArithmeticEncoder {
@@ -5,7 +10,7 @@ public class ArithmeticEncoder {
     private final Model model = new Model();
 
     public Double encode(String input) {
-        // Start with [0, 1)
+        // Inizio con [0, 1)
         Interval currentInterval = new Interval(0d, 1d);
         int i = 0;
         while (i < input.length()) {
@@ -15,7 +20,7 @@ public class ArithmeticEncoder {
 
             Double probability = model.getProbability(0);
 
-            // this is done like this only because we have 2 symbols in the alphabet
+            //  ho preso questa scorciatoria in quanto i simboli nell'alfabeto sono 2: 0 e 1
             Interval a = new Interval(start, start + currentInterval.getWidth() * probability);
             Interval b = new Interval(start + currentInterval.getWidth() * probability, end);
             if (current == 0) {

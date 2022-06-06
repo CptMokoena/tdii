@@ -1,30 +1,37 @@
+/*
+ * Copyright (c) 2022.
+ * Author: Iacopo Filiberto
+ */
+
 package it.filiberto;
 
 import java.util.List;
 
+import static java.lang.System.out;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("First encoding: \n");
+        out.println("First encoding: \n");
         executeEncoding(List.of("01010", "10010", "01110", "11101"));
-        System.out.println("*********\n");
-        System.out.println("Second encoding: \n");
+        out.println("*********\n");
+        out.println("Second encoding: \n");
         executeEncoding(List.of("10010111", "10010011", "01110111", "11101011"));
-        System.out.println("*********\n");
-        System.out.println("Third encoding: \n");
+        out.println("*********\n");
+        out.println("Third encoding: \n");
         executeEncoding(List.of("010111", "100101", "011111", "111001"));
-        System.out.println("*********\n");
+        out.println("*********\n");
     }
 
     public static void executeEncoding(List<String> inputs) {
         var encoder = new ArithmeticEncoder();
         for (String input : inputs) {
-            System.out.printf("Input string: %s%n", input);
-            System.out.printf("N: %d%n", input.length());
+            out.printf("Input string: %s%n", input);
+            out.printf("N: %d%n", input.length());
             var encodedValue = encoder.encode(input);
-            System.out.printf("A: %s%n", encodedValue);
-            System.out.printf("Entropy: %s%n", entropy(input));
-            System.out.printf("log(1/A/N): %s%n", Math.log(1 / encodedValue) / input.length());
-            System.out.println("------");
+            out.printf("A: %s%n", encodedValue);
+            out.printf("Entropy: %s%n", entropy(input));
+            out.printf("log(1/A/N): %s%n", Math.log(1 / encodedValue) / input.length());
+            out.println("------");
         }
     }
 
@@ -44,12 +51,11 @@ public class Main {
         var oneFreq = (onesOccurences * 1.0d) / input.length();
 
         // H(X) = p(0) * log_2(1/p(0) + p(1) * log_2(1/p(1))
-        return zeroFreq * log2(1 / zeroFreq) + oneFreq * log2(1 / oneFreq);
+        return (zeroFreq > 0 ? zeroFreq * log2(1 / zeroFreq) : 0) + (oneFreq > 0 ? oneFreq * log2(1 / oneFreq) : 0);
     }
 
+    // Funzione d'utilità per calcolare log2 in quanto java non ce l'ha :(
     public static Double log2(Double n) {
-        // calculate log2 N indirectly
-        // using log() method
         return (Math.log(n) / Math.log(2));
     }
 }

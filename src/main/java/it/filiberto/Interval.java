@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2022.
+ * Author: Iacopo Filiberto
+ */
+
 package it.filiberto;
 
 public class Interval {
